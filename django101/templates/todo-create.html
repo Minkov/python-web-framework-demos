@@ -1,0 +1,9 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+    <form method="post" action="{% url 'create todo' %}">
+        {% csrf_token %}
+        {{ form }}
+        <button>Save</button>
+    </form>
+{% endblock %}
