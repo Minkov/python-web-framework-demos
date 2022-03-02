@@ -1,14 +1,56 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 
 # pure python func
 # - called with django request object
 # - returns django response
-from django101.web.models import Todo
+from django101.web.models import Todo, Category
 
 
+def permissions_required(required_permissions):
+    def decorator(view_func):
+        def wrapper(request, *args, **kwargs):
+            user = request.user
+            if not user.is_authenticated \
+                    or not user.has_perms(required_permissions):
+                return HttpResponse('No permission')
+            return view_func(request, *args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+# @login_required(login_url='/login-with-fb')
+# @login_required
+@permissions_required(required_permissions=['web.change_category'])
 def index(request):
+    if not request.user.is_authenticated:
+        redirect('login')
+
+    print(request.user)
+
+    user = authenticate(
+        request,
+        username='doncho1',
+        password='12345qwe',
+    )
+
+    # check whether user is in content_creator & content_manager
+    # Change in admin requires new code
+    # => "content reviewer"
+    cat = Category.objects.get(pk=4)
+    cat.name = 'New Name 2'
+    cat.save()
+
+    if user:
+        login(request, user)
+
     context = {
         'title': 'Function-based view',
     }
@@ -16,7 +58,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-class IndexView(views.View):
+class IndexView(LoginRequiredMixin, views.View):
     def get(self, request):
         context = {
             'title': 'Class-based view',

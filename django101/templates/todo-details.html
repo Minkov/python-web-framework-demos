@@ -7,6 +7,6 @@
 
     {{ object.category.name }}
     <p>
-        {{ object.description }}
+        {{ object.description|safe }}
     </p>
 {% endblock %}
