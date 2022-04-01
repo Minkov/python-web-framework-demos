@@ -1,8 +1,8 @@
-import {Box, Button, FormControl, MenuItem, Modal, Select, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
-import styles from "./AddTodo.module.scss";
+import {Box, Button, FormControl, MenuItem, Modal, Select, TextField} from "@mui/material";
 import {useTodos} from "../hooks/todos";
 import {useCategories} from "../hooks/categories";
+import styles from "./AddTodo.module.scss";
 
 const modalStyle = {
     position: 'absolute',

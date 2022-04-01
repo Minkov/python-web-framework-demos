@@ -38,6 +38,7 @@ class HttpService {
 
         const queryParams = query
             ? Object.keys(query)
+                .filter(key => query[key])
                 .map(key => `${key}=${query[key]}`)
                 .join('&')
             : '';

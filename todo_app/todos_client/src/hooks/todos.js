@@ -7,23 +7,28 @@ const useTodos = () => useContext(TodosContext);
 
 const TodosProvider = ({children}) => {
     const [todos, setTodos] = useState([]);
-    const [todoDetails, setTodoDetails] = useState({});
+    const [todoDetails, setTodoDetails] = useState({
+        title: '',
+        description: '',
+        is_done: false,
+    });
     const [query, setQuery] = useState({});
     const {
         httpService,
+        urlsService,
     } = useServices();
 
     const loadTodos = useCallback(async () => {
-        const newTodos = await httpService.get("http://localhost:8000/api/todos/", query);
+        const newTodos = await httpService.get(urlsService.getTodosListUrl(), query);
         setTodos(newTodos);
-    }, [httpService, query]);
+    }, [httpService, query, urlsService]);
 
     const loadTodoDetails = useCallback(
         async (id) => {
-            const newTodo = await httpService.get(`http://localhost:8000/api/todos/${id}/`);
+            const newTodo = await httpService.get(urlsService.getTodoDetailsUrl(id));
             setTodoDetails(newTodo);
         },
-        [httpService],
+        [httpService, urlsService],
     );
 
     const changeTodoState = useCallback(
@@ -33,19 +38,18 @@ const TodosProvider = ({children}) => {
                 ...todoDetails,
                 is_done: !is_done,
             };
-            console.log(payload);
-            await httpService.put(`http://localhost:8000/api/todos/${id}/`, payload);
+            await httpService.put(urlsService.getTodoUpdateUrl(id), payload);
             await loadTodoDetails(id);
         },
-        [httpService, loadTodoDetails, todoDetails],
+        [httpService, loadTodoDetails, todoDetails, urlsService],
     );
 
     const createTodo = useCallback(
         async (todo) => {
-            await httpService.post('http://localhost:8000/api/todos/', todo);
+            await httpService.post(urlsService.getTodoCreateUrl(), todo);
             await loadTodos();
         },
-        [httpService, loadTodos],
+        [httpService, loadTodos, urlsService],
     );
 
     const applyFilter = useCallback(

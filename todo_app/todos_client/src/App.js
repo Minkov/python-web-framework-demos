@@ -9,11 +9,13 @@ import LoginPage from "./pages/LoginPage";
 import StorageService from "./services/storage";
 import CategoriesProvider from "./hooks/categories";
 
+const baseUrl = 'http://localhost:8000';
+
 const App = () => {
     const storageService = new StorageService();
 
     return (
-        <ServicesProvider>
+        <ServicesProvider baseUrl={baseUrl}>
             <AuthProvider initialIsLoggedIn={!!storageService.get('token')}>
                 <TodosProvider>
                     <CategoriesProvider>

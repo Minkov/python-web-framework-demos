@@ -10,14 +10,15 @@ const CategoriesProvider = ({children}) => {
 
     const {
         httpService,
+        urlsService,
     } = useServices();
 
     const loadCategories = useCallback(
         async () => {
-            const categories = await httpService.get('http://localhost:8000/api/todos/categories/');
+            const categories = await httpService.get(urlsService.getCategoriesListUrl());
             setCategories(categories);
         },
-        [httpService],
+        [httpService, urlsService],
     );
 
     const value = {

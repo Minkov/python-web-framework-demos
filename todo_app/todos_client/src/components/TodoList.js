@@ -1,8 +1,8 @@
-import {useTodos} from "../hooks/todos";
 import {useCallback, useEffect, useState} from "react";
-import styles from './TodoList.module.scss';
-import {Box, Button, Grid, Modal, Paper, Stack, Switch} from "@mui/material";
+import {Box, Button, Grid, Modal, Stack, Switch} from "@mui/material";
+import {useTodos} from "../hooks/todos";
 import {useCategories} from "../hooks/categories";
+import TodoItem from "./TodoItem";
 
 const modalStyle = {
     position: 'absolute',
@@ -16,36 +16,53 @@ const modalStyle = {
     p: 4,
 };
 
-const TodoItem = ({todo}) => {
-    const {
-        todoDetails,
-        loadTodoDetails,
-        changeTodoState,
-    } = useTodos();
+
+const TodosList = () => {
+    const [filter, setFilter] = useState({});
 
     const [open, setOpen] = useState(false);
+    const {
+        todos,
+        loadTodos,
+        todoDetails,
+        applyFilter,
+        changeTodoState,
+        loadTodoDetails,
+    } = useTodos();
 
     const {
-        id,
-        title,
-    } = todo;
+        categories,
+        loadCategories,
+    } = useCategories();
 
-    const handleClick = useCallback(
-        async () => {
-            await loadTodoDetails(id);
+    const handleChangeCategory = useCallback((id) => {
+        setFilter({
+            ...filter, category: id,
+        });
+    }, [filter],)
+
+    const handleShowTodoDetails = useCallback(
+        async (id) => {
             setOpen(true);
+            await loadTodoDetails(id);
         },
-        [id, loadTodoDetails],
+        [loadTodoDetails],
     );
 
+    const handleStateChange = useCallback(
+        async () => {
+            await changeTodoState();
+        },
+        [changeTodoState],
+    );
 
-    const renderModalContent = useCallback(
-        () => {
-            const {title, description, is_done: isDone} = todoDetails;
+    const renderModalContent = useCallback(() => {
+            const {
+                title,
+                description,
+                is_done: isDone,
+            } = todoDetails;
 
-            const handleStateChange = async () => {
-                await changeTodoState();
-            };
             return (
                 <Box>
                     <h3>
@@ -54,62 +71,13 @@ const TodoItem = ({todo}) => {
                     <p>
                         {description}
                     </p>
-                    <Switch defaultChecked={isDone} onChange={() => handleStateChange()}/>
+                    <Switch
+                        checked={isDone} onChange={() => handleStateChange()}/>
                 </Box>
             )
         },
-        [changeTodoState, todoDetails],
+        [handleStateChange, todoDetails],
     );
-
-    return (
-        <>
-            <Box sx={{
-                // borderBottom: '1px solid black',
-                // padding: 15,
-                marginTop: 5,
-                width: 150,
-                textAlign: 'center',
-            }}>
-                <div className={styles.box}>
-                    <h3>{title}</h3>
-                    <Button
-                        variant='text'
-                        onClick={() => handleClick()}>Details</Button>
-                </div>
-            </Box>
-
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <Box sx={modalStyle}>
-                    {renderModalContent()}
-                </Box>
-            </Modal>
-        </>
-    );
-}
-
-const TodosList = () => {
-    const {
-        todos,
-        loadTodos,
-        applyFilter,
-    } = useTodos();
-
-    const [filter, setFilter] = useState({});
-
-    const {
-        categories,
-        loadCategories,
-    } = useCategories();
-
-    const handleChangeCategory = useCallback(
-        (id) => {
-            setFilter({
-                ...filter,
-                category: id,
-            });
-        },
-        [filter],
-    )
 
     useEffect(() => {
         (async () => {
@@ -117,43 +85,39 @@ const TodosList = () => {
         })();
     }, [loadTodos]);
 
-    useEffect(
-        () => {
-            (async () => {
-                await loadCategories();
-            })();
-        },
-        [loadCategories],
-    );
+    useEffect(() => {
+        (async () => {
+            await loadCategories();
+        })();
+    }, [loadCategories],);
 
-    useEffect(
-        () => {
-            (() => {
-                applyFilter(filter);
-            })();
-        },
-        [applyFilter, filter],
-    );
+    useEffect(() => {
+        (() => {
+            applyFilter(filter);
+        })();
+    }, [applyFilter, filter],);
 
-    return (
-        <div>
-            <Stack direction='row'>
-                <Button onClick={() => handleChangeCategory('')}>All</Button>
-                {
-                    categories.map(({name, id}) => (
-                        <Button onClick={() => handleChangeCategory(id)}>{name}</Button>
-                    ))
-                }
-            </Stack>
-            <Grid container>
-                {todos.map(todo => (
-                    <Grid item key={todo.id} xs={4}>
-                        <TodoItem todo={todo}/>
-                    </Grid>
-                ))}
-            </Grid>
-        </div>
-    )
+    return (<div>
+        <Stack direction='row'>
+            <Button onClick={() => handleChangeCategory('')}>All</Button>
+            {categories.map(({name, id}) => (
+                <Button key={id} onClick={() => handleChangeCategory(id)}>{name}</Button>))}
+        </Stack>
+        <Grid container>
+            {todos.map(todo => (<Grid item key={todo.id} xs={4}>
+                <TodoItem
+                    todo={todo}
+                    onShowDetails={(id) => handleShowTodoDetails(id)}
+                />
+            </Grid>))}
+        </Grid>
+
+        <Modal open={open} onClose={() => setOpen(false)}>
+            <Box sx={modalStyle}>
+                {renderModalContent()}
+            </Box>
+        </Modal>
+    </div>)
 };
 
 export default TodosList;
