@@ -1,0 +1,64 @@
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /exception/
+Traceback (most recent call last):
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/venv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/venv/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/web/views.py", line 20, in raises_exception_view
+    raises_exception()
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/web/views.py", line 13, in raises_exception
+    raise AppException('Object has invalid Id. Valid IDs are 1, 2, 3, 7')
+exceptions_demos.web.views.AppException: Object has invalid Id. Valid IDs are 1, 2, 3, 7
+Critical: I am Doncho
+Error: I am Doncho
+Warning: I am Doncho
+Info: I am Doncho
+/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /exception/
+Traceback (most recent call last):
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/venv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/venv/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/web/views.py", line 20, in raises_exception_view
+    raises_exception()
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/web/views.py", line 13, in raises_exception
+    raise AppException('Object has invalid Id. Valid IDs are 1, 2, 3, 7')
+exceptions_demos.web.views.AppException: Object has invalid Id. Valid IDs are 1, 2, 3, 7
+Critical: I am Doncho
+Error: I am Doncho
+Warning: I am Doncho
+Info: I am Doncho
+/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /exception/
+Traceback (most recent call last):
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/venv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/venv/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/web/views.py", line 20, in raises_exception_view
+    raises_exception()
+  File "/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/web/views.py", line 13, in raises_exception
+    raise AppException('Object has invalid Id. Valid IDs are 1, 2, 3, 7')
+exceptions_demos.web.views.AppException: Object has invalid Id. Valid IDs are 1, 2, 3, 7
+Critical: I am Doncho
+Error: I am Doncho
+Warning: I am Doncho
+Info: I am Doncho
+/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/Users/doncho/repos/softuni-courses/demo-repos/python-web-advanced/exceptions_demos/exceptions_demos/settings.py changed, reloading.
